@@ -1,0 +1,53 @@
+# Vulnerable Python Dependencies for Demo
+# These packages contain known CVEs for testing purposes
+
+# Outdated Flask with known vulnerabilities
+Flask==1.1.1
+
+# Outdated requests library with security issues
+requests==2.20.0
+
+# Outdated cryptography library
+cryptography==2.8
+
+# Outdated PyYAML with deserialization vulnerabilities
+PyYAML==5.1.2
+
+# Outdated Jinja2 template engine
+Jinja2==2.10.1
+
+# Outdated Werkzeug WSGI library
+Werkzeug==1.0.1
+
+# Outdated urllib3 with security issues
+urllib3==1.24.1
+
+# Outdated certifi certificate bundle
+certifi==2019.6.16
+
+# Outdated chardet character encoding detector
+chardet==3.0.4
+
+# Outdated idna internationalized domain names
+idna==2.8
+
+# Outdated click command line interface
+click==7.0
+
+# Outdated itsdangerous security utilities
+itsdangerous==1.1.0
+
+# Outdated MarkupSafe HTML/XML escaping
+MarkupSafe==1.1.1
+
+# Outdated six Python 2/3 compatibility
+six==1.12.0
+
+# Outdated cffi C Foreign Function Interface
+cffi==1.12.3
+
+# Outdated pycparser C parser
+pycparser==2.19
+
+# Outdated pycryptodome cryptographic library
+pycryptodome==3.8.2

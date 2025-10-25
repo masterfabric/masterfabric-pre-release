@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.title}}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .vulnerable { background-color: #ffebee; padding: 20px; border-radius: 5px; margin: 10px 0; }
+        .secret { background-color: #fff3e0; padding: 10px; border-radius: 3px; margin: 5px 0; }
+        pre { background-color: #f5f5f5; padding: 10px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>{{.title}}</h1>
+    
+    <div class="vulnerable">
+        <h2>⚠️ VULNERABLE APPLICATION - DO NOT USE IN PRODUCTION!</h2>
+        <p>This application contains intentional security vulnerabilities for testing purposes.</p>
+    </div>
+
+    <h2>Exposed Secrets (VULNERABILITY: Information Disclosure)</h2>
+    <div class="secret">
+        <strong>Secret Key:</strong> {{.secret_key}}
+    </div>
+    <div class="secret">
+        <strong>JWT Secret:</strong> {{.jwt_secret}}
+    </div>
+    <div class="secret">
+        <strong>API Key:</strong> {{.api_key}}
+    </div>
+    <div class="secret">
+        <strong>DB Password:</strong> {{.db_password}}
+    </div>
+    <div class="secret">
+        <strong>Session ID:</strong> {{.session_id}}
+    </div>
+
+    <h2>Available Endpoints</h2>
+    <ul>
+        <li><strong>GET /users/:id</strong> - Get user by ID (SQL Injection vulnerable)</li>
+        <li><strong>POST /register</strong> - Register new user (No validation)</li>
+        <li><strong>POST /login</strong> - Login (Weak authentication)</li>
+        <li><strong>POST /execute</strong> - Execute command (Command Injection)</li>
+        <li><strong>POST /read</strong> - Read file (Path Traversal)</li>
+        <li><strong>POST /encrypt</strong> - Encrypt data (Weak encryption)</li>
+        <li><strong>POST /decrypt</strong> - Decrypt data (Weak decryption)</li>
+        <li><strong>GET /debug</strong> - Debug information (Information disclosure)</li>
+        <li><strong>GET /admin</strong> - Admin panel (No authentication)</li>
+    </ul>
+
+    <h2>Test Examples</h2>
+    
+    <h3>SQL Injection Test</h3>
+    <pre>
+curl -X GET "http://localhost:8080/users/1 OR 1=1"
+    </pre>
+
+    <h3>Command Injection Test</h3>
+    <pre>
+curl -X POST "http://localhost:8080/execute" \
+  -H "Content-Type: application/json" \
+  -d '{"command": "ls -la; cat /etc/passwd"}'
+    </pre>
+
+    <h3>Path Traversal Test</h3>
+    <pre>
+curl -X POST "http://localhost:8080/read" \
+  -H "Content-Type: application/json" \
+  -d '{"filename": "../../../etc/passwd"}'
+    </pre>
+
+    <h3>Weak Authentication Test</h3>
+    <pre>
+curl -X POST "http://localhost:8080/login" \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "hello"}'
+    </pre>
+
+    <h3>Information Disclosure Test</h3>
+    <pre>
+curl -X GET "http://localhost:8080/debug"
+    </pre>
+
+    <h3>Admin Panel Access (No Auth)</h3>
+    <pre>
+curl -X GET "http://localhost:8080/admin"
+    </pre>
+
+    <h2>Security Vulnerabilities Included</h2>
+    <ul>
+        <li><strong>Critical:</strong> Outdated dependencies with known CVEs</li>
+        <li><strong>High:</strong> Hardcoded secrets and credentials</li>
+        <li><strong>High:</strong> SQL injection vulnerabilities</li>
+        <li><strong>High:</strong> Command injection vulnerabilities</li>
+        <li><strong>Medium:</strong> Weak cryptographic implementations</li>
+        <li><strong>Medium:</strong> Information disclosure</li>
+        <li><strong>Low:</strong> Missing input validation</li>
+        <li><strong>Low:</strong> No authentication on protected endpoints</li>
+    </ul>
+
+    <div class="vulnerable">
+        <h3>⚠️ REMINDER</h3>
+        <p>This application is designed for security testing only. Never use this code in production!</p>
+    </div>
+</body>
+</html>

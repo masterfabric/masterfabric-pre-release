@@ -1,0 +1,1550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterFabric Security Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background-color: #ffffff; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; border: 1px solid #000000; overflow: hidden; }
+        .header { background: #000000; color: white; padding: 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; font-weight: 300; }
+        .header p { margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1em; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 30px; }
+        .section h2 { color: #000000; border-bottom: 2px solid #000000; padding-bottom: 10px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: #ffffff; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #000000; }
+        .stat-number { font-size: 2em; font-weight: bold; color: #000000; }
+        .stat-label { color: #333333; margin-top: 5px; }
+        .severity-critical { color: #dc3545; }
+        .severity-high { color: #fd7e14; }
+        .severity-medium { color: #ffc107; }
+        .severity-low { color: #28a745; }
+        .finding { background: #ffffff; border: 1px solid #000000; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .finding-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .finding-title { font-weight: bold; font-size: 1.1em; color: #000000; }
+        .finding-severity { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; border: 1px solid #000000; }
+        .finding-details { color: #333333; font-size: 0.9em; }
+        .finding-file { font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px; border: 1px solid #000000; }
+        .finding-recommendation { background: #f0f0f0; border: 1px solid #000000; border-radius: 4px; padding: 10px; margin-top: 10px; }
+        .compliance-pass { color: #000000; font-weight: bold; }
+        .compliance-fail { color: #000000; font-weight: bold; }
+        .footer { background: #f0f0f0; padding: 20px; text-align: center; color: #333333; border-top: 1px solid #000000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MasterFabric Security Report</h1>
+            <p>Enterprise-Grade Security Analysis & CVE Detection</p>
+            <p>Generated on 2025-10-26 01:37:32</p>
+        </div>
+        <div class="content">
+            <div class="section">
+                <h2>Security Analysis Summary</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">110</div>
+                        <div class="stat-label">Total Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-critical">2</div>
+                        <div class="stat-label">Critical</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-high">13</div>
+                        <div class="stat-label">High</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-medium">2</div>
+                        <div class="stat-label">Medium</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-low">93</div>
+                        <div class="stat-label">Low</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">API Calls Made</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Security Policy Configuration</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">HIGH</div>
+                        <div class="stat-label">Failure Threshold</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Approved SDKs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Blacklisted Versions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Memory Safety</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Concurrency Checks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Secret Scanning</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Detailed Security Findings</h2>
+                <h3 class="severity-critical">CRITICAL SEVERITY ISSUES (2 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Hardcoded API key detected</div>
+                        <div class="finding-severity severity-critical">CRITICAL</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 21<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Move API keys to environment variables or secure storage
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Hardcoded API key detected</div>
+                        <div class="finding-severity severity-critical">CRITICAL</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 353<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Move API keys to environment variables or secure storage
+                    </div>
+                </div>
+                <h3 class="severity-high">HIGH SEVERITY ISSUES (13 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Weak cryptographic algorithm detected: md5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 9<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace md5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Weak cryptographic algorithm detected: sha1</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 10<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace sha1 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">3. Weak cryptographic algorithm detected: MD5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 61<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace MD5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">4. Weak cryptographic algorithm detected: md5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 63<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace md5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">5. Weak cryptographic algorithm detected: XOR</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 77<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace XOR with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">6. Weak cryptographic algorithm detected: MD5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 107<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace MD5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">7. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 204<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">8. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 209<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">9. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 216<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">10. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 223<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">11. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 230<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">12. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 235<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">13. Weak cryptographic algorithm detected: des</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 252<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace des with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <h3 class="severity-medium">MEDIUM SEVERITY ISSUES (2 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Weak random number generator detected: timestamp</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 70<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Weak random number generator detected: timestamp</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./src/main.rs</span><br>
+                        <strong>Line:</strong> 74<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <h3 class="severity-low">LOW SEVERITY ISSUES (93 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 8<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 9<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">3. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 10<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">4. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 11<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">5. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 12<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">6. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 13<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">7. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 14<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">8. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 15<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">9. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 16<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">10. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 17<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">11. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 18<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">12. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 19<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">13. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 20<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">14. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 21<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">15. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 22<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">16. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 23<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">17. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 24<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">18. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 25<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">19. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 26<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">20. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 27<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">21. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 28<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">22. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 29<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">23. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 30<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">24. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 31<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">25. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 32<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">26. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 33<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">27. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 34<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">28. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 35<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">29. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 36<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">30. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 37<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">31. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 38<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">32. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 39<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">33. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 40<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">34. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 41<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">35. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 42<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">36. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 43<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">37. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 44<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">38. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 45<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">39. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 46<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">40. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 47<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">41. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 48<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">42. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 49<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">43. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 50<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">44. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 51<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">45. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 52<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">46. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 53<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">47. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 54<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">48. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 55<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">49. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 56<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">50. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 57<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">51. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 58<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">52. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 59<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">53. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 60<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">54. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 61<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">55. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 62<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">56. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 63<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">57. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 64<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">58. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 65<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">59. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 66<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">60. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 67<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">61. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 68<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">62. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 69<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">63. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 70<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">64. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 71<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">65. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 72<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">66. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 73<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">67. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 74<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">68. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 75<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">69. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 76<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">70. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 77<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">71. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 78<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">72. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 79<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">73. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 80<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">74. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 81<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">75. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 82<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">76. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 83<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">77. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 84<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">78. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 85<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">79. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 86<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">80. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 87<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">81. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 88<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">82. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 89<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">83. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 90<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">84. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 91<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">85. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 92<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">86. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 93<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">87. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 94<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">88. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 95<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">89. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 96<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">90. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 97<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">91. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 98<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">92. Rust dependency detected - verify for known vulnerabilities</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">./Cargo.toml</span><br>
+                        <strong>Line:</strong> 99<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Check for known CVEs in the Rust ecosystem
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">93. cppcheck not available or failed to run</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">.</span><br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Install cppcheck for enhanced static analysis
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Policy Compliance Status</h2>
+                <div class="compliance-fail">✗ Policy Compliance: FAILED</div>
+                <p>⚠️ Findings exceed the failure threshold (HIGH) ⚠️</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>MasterFabric Security Checker - Enterprise-Grade Protection</p>
+            <p>Analysis completed at: 2025-10-26 01:37:32 | Total findings: 110 | API calls made: 6</p>
+        </div>
+    </div>
+</body>
+</html>

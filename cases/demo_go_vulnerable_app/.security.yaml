@@ -1,0 +1,52 @@
+# Security Policy for Go Demo Application
+# This policy is designed to catch the intentional vulnerabilities in the demo app
+
+failure_threshold: HIGH
+
+# Approved SDKs - intentionally restrictive to catch vulnerabilities
+approved_sdks:
+  - name: "github.com/gin-gonic/gin"
+    versions: ">=1.7.0"
+  - name: "github.com/golang-jwt/jwt"
+    versions: ">=4.0.0"
+  - name: "github.com/mattn/go-sqlite3"
+    versions: ">=1.14.0"
+  - name: "golang.org/x/crypto"
+    versions: ">=0.1.0"
+
+# Blacklisted versions - these should be caught
+blacklisted_versions:
+  - "github.com/gin-gonic/gin@<1.7.0"
+  - "github.com/golang-jwt/jwt@<4.0.0"
+  - "github.com/mattn/go-sqlite3@<1.14.0"
+  - "golang.org/x/crypto@<0.1.0"
+
+# Minimum acceptable cryptographic standards
+minimum_acceptable_standards:
+  symmetric_encryption: "AES-256-GCM"
+  hashing: "SHA-256"
+  password_hashing: "bcrypt"
+
+# Hardcoded secret scanning
+hardcoded_secret_scan:
+  enabled: true
+  entropy_threshold: 4.5
+
+# Memory safety checks
+memory_safety_checks: true
+
+# Concurrency checks
+concurrency_checks: true
+
+# Required hardening flags
+required_hardening_flags:
+  - "stack-protector"
+  - "pie"
+  - "relro"
+
+# Binary security checks
+binary_checks:
+  require_stack_protection: true
+  require_pie: true
+  require_relro: true
+  strip_debug_symbols: true

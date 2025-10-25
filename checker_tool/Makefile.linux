@@ -1,0 +1,87 @@
+# MasterFabric Pre-Release Security Checker Makefile for Linux
+
+CC = gcc
+CFLAGS = -Wall -Wextra -std=c99 -O2 -g -I/usr/include/curl -I/usr/include/json-c
+LDFLAGS = -lm -lcurl -ljson-c
+TARGET = masterfabric-prerelease
+SRCDIR = src
+INCDIR = include
+OBJDIR = obj
+BINDIR = bin
+
+# Source files
+SOURCES = $(wildcard $(SRCDIR)/*.c)
+OBJECTS = $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+
+# Default target
+all: $(BINDIR)/$(TARGET)
+
+# Create directories
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
+$(BINDIR):
+	mkdir -p $(BINDIR)
+
+# Compile object files
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
+	$(CC) $(CFLAGS) -I$(INCDIR) -c $< -o $@
+
+# Link executable
+$(BINDIR)/$(TARGET): $(OBJECTS) | $(BINDIR)
+	$(CC) $(OBJECTS) -o $@ $(LDFLAGS)
+
+# Install to system
+install: $(BINDIR)/$(TARGET)
+	cp $(BINDIR)/$(TARGET) /usr/local/bin/
+	chmod +x /usr/local/bin/$(TARGET)
+
+# Uninstall from system
+uninstall:
+	rm -f /usr/local/bin/$(TARGET)
+
+# Clean build artifacts
+clean:
+	rm -rf $(OBJDIR) $(BINDIR)
+
+# Run tests
+test: $(BINDIR)/$(TARGET)
+	@echo "Running security checker on Next.js demo application..."
+	-cd ../cases/demo_vulnerable_app && ../../checker_tool/$(BINDIR)/$(TARGET) --check . --verbose
+	@echo ""
+	@echo "Running security checker on Flutter demo application..."
+	-cd ../cases/demo_flutter_vulnerable_app && ../../checker_tool/$(BINDIR)/$(TARGET) --check . --verbose
+
+# Debug build
+debug: CFLAGS += -DDEBUG -g3
+debug: $(BINDIR)/$(TARGET)
+
+# Release build
+release: CFLAGS += -DNDEBUG -O3
+release: clean $(BINDIR)/$(TARGET)
+
+# Check for required tools
+check-deps:
+	@echo "Checking for required dependencies..."
+	@which clang-tidy > /dev/null || echo "Warning: clang-tidy not found"
+	@which cppcheck > /dev/null || echo "Warning: cppcheck not found"
+	@pkg-config --exists libcurl && echo "✓ libcurl found" || echo "✗ libcurl not found - install with: sudo apt-get install libcurl4-openssl-dev"
+	@pkg-config --exists json-c && echo "✓ json-c found" || echo "✗ json-c not found - install with: sudo apt-get install libjson-c-dev"
+	@echo "Dependencies check complete"
+
+# Show help
+help:
+	@echo "MasterFabric Pre-Release Security Checker Build System (Linux)"
+	@echo ""
+	@echo "Available targets:"
+	@echo "  all       - Build the security checker (default)"
+	@echo "  install   - Install to /usr/local/bin"
+	@echo "  uninstall - Remove from /usr/local/bin"
+	@echo "  clean     - Remove build artifacts"
+	@echo "  test      - Run tests on demo application"
+	@echo "  debug     - Build with debug symbols"
+	@echo "  release   - Build optimized release version"
+	@echo "  check-deps- Check for required dependencies"
+	@echo "  help      - Show this help message"
+
+.PHONY: all install uninstall clean test debug release check-deps help

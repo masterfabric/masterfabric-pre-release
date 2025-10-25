@@ -1,0 +1,55 @@
+# Security Policy for Python Demo Application
+# This policy is designed to catch the intentional vulnerabilities in the demo app
+
+failure_threshold: HIGH
+
+# Approved SDKs - intentionally restrictive to catch vulnerabilities
+approved_sdks:
+  - name: "flask"
+    versions: ">=2.0.0"
+  - name: "requests"
+    versions: ">=2.25.0"
+  - name: "cryptography"
+    versions: ">=3.0.0"
+  - name: "pyyaml"
+    versions: ">=5.4.0"
+
+# Blacklisted versions - these should be caught
+blacklisted_versions:
+  - "flask@<2.0.0"
+  - "requests@<2.25.0"
+  - "cryptography@<3.0.0"
+  - "pyyaml@<5.4.0"
+  - "jinja2@<2.11.0"
+  - "werkzeug@<1.0.1"
+  - "urllib3@<1.26.0"
+
+# Minimum acceptable cryptographic standards
+minimum_acceptable_standards:
+  symmetric_encryption: "AES-256-GCM"
+  hashing: "SHA-256"
+  password_hashing: "bcrypt"
+
+# Hardcoded secret scanning
+hardcoded_secret_scan:
+  enabled: true
+  entropy_threshold: 4.5
+
+# Memory safety checks
+memory_safety_checks: true
+
+# Concurrency checks
+concurrency_checks: true
+
+# Required hardening flags
+required_hardening_flags:
+  - "stack-protector"
+  - "pie"
+  - "relro"
+
+# Binary security checks
+binary_checks:
+  require_stack_protection: true
+  require_pie: true
+  require_relro: true
+  strip_debug_symbols: true
