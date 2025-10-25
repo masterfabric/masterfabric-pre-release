@@ -26,14 +26,29 @@ A comprehensive C-based security analysis tool designed to perform automated sec
 
 ## 🛠 Installation
 
+### 🚀 Quick Install (macOS)
+
+**One-line installation:**
+```bash
+curl -fsSL https://raw.githubusercontent.com/masterfabric/masterfabric-pre-release/main/dist/macos/install.sh | bash
+```
+
+**Or download and install manually:**
+```bash
+# Download the latest release
+wget https://github.com/masterfabric/masterfabric-pre-release/releases/latest/download/masterfabric-macos-v1.0.0.tar.gz
+
+# Extract and install
+tar -xzf masterfabric-macos-v1.0.0.tar.gz
+cd masterfabric-macos
+./install.sh
+```
+
 ### Prerequisites
 
-- GCC or Clang compiler
-- Make
-- libcurl (for real-time CVE API integration)
-- json-c (for JSON parsing)
-- clang-tidy (optional, for enhanced static analysis)
-- cppcheck (optional, for enhanced static analysis)
+- **macOS 10.15+** (Catalina or later)
+- **Administrator privileges** (for installation to `/usr/local/bin`)
+- **Internet connection** (for CVE database queries)
 
 ### Build from Source
 
@@ -57,6 +72,13 @@ sudo make install
 
 ```bash
 masterfabric-prerelease --version
+```
+
+### Uninstallation
+
+To remove MasterFabric Security Checker:
+```bash
+curl -fsSL https://raw.githubusercontent.com/masterfabric/masterfabric-pre-release/main/dist/macos/uninstall.sh | bash
 ```
 
 ## 🚀 Quick Start
@@ -101,6 +123,12 @@ masterfabric-prerelease --check /path/to/project
 
 # Verbose output
 masterfabric-prerelease --check --verbose
+
+# Export results to HTML report
+masterfabric-prerelease --check /path/to/project --html security_report.html
+
+# Verbose output with HTML export
+masterfabric-prerelease --check /path/to/project --verbose --html report.html
 ```
 
 ### 3. Review Results
@@ -110,6 +138,7 @@ The tool will output a comprehensive security report with:
 - Detailed descriptions of each issue
 - Specific recommendations for remediation
 - Policy compliance status
+- **HTML Export**: Professional reports with black and white design for sharing and printing
 
 ## 🔄 Real-Time CVE API Integration
 
@@ -222,6 +251,7 @@ masterfabric-prerelease [OPTIONS]
 
 Options:
   --check [PATH]    Check directory for security issues
+  --html [FILE]     Export results to HTML file
   --verbose         Enable verbose output
   --help            Show help message
   --version         Show version information

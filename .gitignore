@@ -10,7 +10,7 @@ yarn.lock
 .next/
 out/
 build/
-dist/
+
 
 # Environment variables
 .env
