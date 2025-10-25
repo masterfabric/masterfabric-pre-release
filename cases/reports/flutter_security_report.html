@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MasterFabric Security Report</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background-color: #ffffff; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; border: 1px solid #000000; overflow: hidden; }
+        .header { background: #000000; color: white; padding: 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 2.5em; font-weight: 300; }
+        .header p { margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1em; }
+        .content { padding: 30px; }
+        .section { margin-bottom: 30px; }
+        .section h2 { color: #000000; border-bottom: 2px solid #000000; padding-bottom: 10px; margin-bottom: 20px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: #ffffff; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #000000; }
+        .stat-number { font-size: 2em; font-weight: bold; color: #000000; }
+        .stat-label { color: #333333; margin-top: 5px; }
+        .severity-critical { color: #dc3545; }
+        .severity-high { color: #fd7e14; }
+        .severity-medium { color: #ffc107; }
+        .severity-low { color: #28a745; }
+        .finding { background: #ffffff; border: 1px solid #000000; border-radius: 8px; padding: 20px; margin-bottom: 15px; }
+        .finding-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .finding-title { font-weight: bold; font-size: 1.1em; color: #000000; }
+        .finding-severity { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; border: 1px solid #000000; }
+        .finding-details { color: #333333; font-size: 0.9em; }
+        .finding-file { font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px; border: 1px solid #000000; }
+        .finding-recommendation { background: #f0f0f0; border: 1px solid #000000; border-radius: 4px; padding: 10px; margin-top: 10px; }
+        .compliance-pass { color: #000000; font-weight: bold; }
+        .compliance-fail { color: #000000; font-weight: bold; }
+        .footer { background: #f0f0f0; padding: 20px; text-align: center; color: #333333; border-top: 1px solid #000000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>MasterFabric Security Report</h1>
+            <p>Enterprise-Grade Security Analysis & CVE Detection</p>
+            <p>Generated on 2025-10-26 01:11:18</p>
+        </div>
+        <div class="content">
+            <div class="section">
+                <h2>Security Analysis Summary</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">25</div>
+                        <div class="stat-label">Total Findings</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-critical">3</div>
+                        <div class="stat-label">Critical</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-high">12</div>
+                        <div class="stat-label">High</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-medium">9</div>
+                        <div class="stat-label">Medium</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number severity-low">1</div>
+                        <div class="stat-label">Low</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">API Calls Made</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Security Policy Configuration</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">HIGH</div>
+                        <div class="stat-label">Failure Threshold</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Approved SDKs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Blacklisted Versions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Memory Safety</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Concurrency Checks</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Enabled</div>
+                        <div class="stat-label">Secret Scanning</div>
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Detailed Security Findings</h2>
+                <h3 class="severity-critical">CRITICAL SEVERITY ISSUES (3 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Hardcoded API key detected</div>
+                        <div class="finding-severity severity-critical">CRITICAL</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/api_service.dart</span><br>
+                        <strong>Line:</strong> 6<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Move API keys to environment variables or secure storage
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Hardcoded API key detected</div>
+                        <div class="finding-severity severity-critical">CRITICAL</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/storage_service.dart</span><br>
+                        <strong>Line:</strong> 65<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Move API keys to environment variables or secure storage
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">3. Hardcoded API key detected</div>
+                        <div class="finding-severity severity-critical">CRITICAL</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/storage_service.dart</span><br>
+                        <strong>Line:</strong> 71<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Move API keys to environment variables or secure storage
+                    </div>
+                </div>
+                <h3 class="severity-high">HIGH SEVERITY ISSUES (12 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Weak cryptographic algorithm detected: MD5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 9<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace MD5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Weak cryptographic algorithm detected: md5</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 12<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace md5 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">3. Weak cryptographic algorithm detected: SHA1</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 16<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace SHA1 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">4. Weak cryptographic algorithm detected: sha1</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 19<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace sha1 with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">5. Weak cryptographic algorithm detected: Random()</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 25<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace Random() with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">6. Weak cryptographic algorithm detected: XOR</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 31<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace XOR with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">7. Weak cryptographic algorithm detected: base64.encode</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 42<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace base64.encode with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">8. Weak cryptographic algorithm detected: base64.decode</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 49<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace base64.decode with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">9. Weak cryptographic algorithm detected: Random()</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 67<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Replace Random() with a stronger algorithm (e.g., AES-256-GCM, SHA3-256)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">10. Insecure HTTP connection detected</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/api_service.dart</span><br>
+                        <strong>Line:</strong> 9<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use HTTPS instead of HTTP for secure communications
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">11. Potential SQL injection vulnerability</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/storage_service.dart</span><br>
+                        <strong>Line:</strong> 29<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use parameterized queries instead of raw SQL
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">12. Potential SQL injection vulnerability</div>
+                        <div class="finding-severity severity-high">HIGH</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/storage_service.dart</span><br>
+                        <strong>Line:</strong> 54<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use parameterized queries instead of raw SQL
+                    </div>
+                </div>
+                <h3 class="severity-medium">MEDIUM SEVERITY ISSUES (9 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. Missing input validation</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/screens/home_screen.dart</span><br>
+                        <strong>Line:</strong> 14<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Implement proper input validation and sanitization
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">2. Missing input validation</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/screens/home_screen.dart</span><br>
+                        <strong>Line:</strong> 15<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Implement proper input validation and sanitization
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">3. Weak random number generator detected: Random()</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 25<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">4. Weak random number generator detected: DateTime.now().millisecondsSinceEpoch</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 26<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">5. Weak random number generator detected: timestamp</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 28<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">6. Weak random number generator detected: Random()</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 67<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">7. Weak random number generator detected: DateTime.now().millisecondsSinceEpoch</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 68<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">8. Weak random number generator detected: timestamp</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/crypto_service.dart</span><br>
+                        <strong>Line:</strong> 73<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use cryptographically secure random number generator (e.g., /dev/urandom, crypto.randomBytes)
+                    </div>
+                </div>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">9. Sensitive data stored in SharedPreferences</div>
+                        <div class="finding-severity severity-medium">MEDIUM</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app/lib/services/storage_service.dart</span><br>
+                        <strong>Line:</strong> 14<br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Use encrypted storage for sensitive data
+                    </div>
+                </div>
+                <h3 class="severity-low">LOW SEVERITY ISSUES (1 found)</h3>
+                <div class="finding">
+                    <div class="finding-header">
+                        <div class="finding-title">1. cppcheck not available or failed to run</div>
+                        <div class="finding-severity severity-low">LOW</div>
+                    </div>
+                    <div class="finding-details">
+                        <strong>File:</strong> <span class="finding-file">../cases/demo_flutter_vulnerable_app</span><br>
+                    </div>
+                    <div class="finding-recommendation">
+                        <strong>Recommendation:</strong> Install cppcheck for enhanced static analysis
+                    </div>
+                </div>
+            </div>
+            <div class="section">
+                <h2>Policy Compliance Status</h2>
+                <div class="compliance-fail">✗ Policy Compliance: FAILED</div>
+                <p>⚠️ Findings exceed the failure threshold (HIGH) ⚠️</p>
+            </div>
+        </div>
+        <div class="footer">
+            <p>MasterFabric Security Checker - Enterprise-Grade Protection</p>
+            <p>Analysis completed at: 2025-10-26 01:11:18 | Total findings: 25 | API calls made: 6</p>
+        </div>
+    </div>
+</body>
+</html>

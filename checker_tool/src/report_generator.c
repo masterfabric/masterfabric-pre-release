@@ -218,3 +218,275 @@ int determine_exit_code(const scan_results_t* results, const security_policy_t* 
     
     return (highest_severity >= policy->failure_threshold) ? 1 : 0;
 }
+
+// Helper function to escape HTML characters
+void escape_html(const char* input, char* output, size_t output_size) {
+    size_t input_len = strlen(input);
+    size_t output_pos = 0;
+    
+    for (size_t i = 0; i < input_len && output_pos < output_size - 1; i++) {
+        switch (input[i]) {
+            case '<':
+                if (output_pos + 4 < output_size) {
+                    strcpy(output + output_pos, "&lt;");
+                    output_pos += 4;
+                }
+                break;
+            case '>':
+                if (output_pos + 4 < output_size) {
+                    strcpy(output + output_pos, "&gt;");
+                    output_pos += 4;
+                }
+                break;
+            case '&':
+                if (output_pos + 5 < output_size) {
+                    strcpy(output + output_pos, "&amp;");
+                    output_pos += 5;
+                }
+                break;
+            case '"':
+                if (output_pos + 6 < output_size) {
+                    strcpy(output + output_pos, "&quot;");
+                    output_pos += 6;
+                }
+                break;
+            case '\'':
+                if (output_pos + 6 < output_size) {
+                    strcpy(output + output_pos, "&#39;");
+                    output_pos += 6;
+                }
+                break;
+            default:
+                output[output_pos++] = input[i];
+                break;
+        }
+    }
+    output[output_pos] = '\0';
+}
+
+int generate_html_report(const scan_results_t* results, const security_policy_t* policy, const char* output_file, int api_calls_made) {
+    FILE* file = fopen(output_file, "w");
+    if (!file) {
+        return 1;
+    }
+    
+    // Get current timestamp
+    time_t now = time(0);
+    struct tm* timeinfo = localtime(&now);
+    char timestamp[64];
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", timeinfo);
+    
+    // HTML header
+    fprintf(file, "<!DOCTYPE html>\n");
+    fprintf(file, "<html lang=\"en\">\n");
+    fprintf(file, "<head>\n");
+    fprintf(file, "    <meta charset=\"UTF-8\">\n");
+    fprintf(file, "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
+    fprintf(file, "    <title>MasterFabric Security Report</title>\n");
+    fprintf(file, "    <style>\n");
+    fprintf(file, "        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 20px; background-color: #ffffff; }\n");
+    fprintf(file, "        .container { max-width: 1200px; margin: 0 auto; background: white; border-radius: 8px; border: 1px solid #000000; overflow: hidden; }\n");
+    fprintf(file, "        .header { background: #000000; color: white; padding: 30px; text-align: center; }\n");
+    fprintf(file, "        .header h1 { margin: 0; font-size: 2.5em; font-weight: 300; }\n");
+    fprintf(file, "        .header p { margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1em; }\n");
+    fprintf(file, "        .content { padding: 30px; }\n");
+    fprintf(file, "        .section { margin-bottom: 30px; }\n");
+    fprintf(file, "        .section h2 { color: #000000; border-bottom: 2px solid #000000; padding-bottom: 10px; margin-bottom: 20px; }\n");
+    fprintf(file, "        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }\n");
+    fprintf(file, "        .stat-card { background: #ffffff; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #000000; }\n");
+    fprintf(file, "        .stat-number { font-size: 2em; font-weight: bold; color: #000000; }\n");
+    fprintf(file, "        .stat-label { color: #333333; margin-top: 5px; }\n");
+    fprintf(file, "        .severity-critical { color: #dc3545; }\n");
+    fprintf(file, "        .severity-high { color: #fd7e14; }\n");
+    fprintf(file, "        .severity-medium { color: #ffc107; }\n");
+    fprintf(file, "        .severity-low { color: #28a745; }\n");
+    fprintf(file, "        .finding { background: #ffffff; border: 1px solid #000000; border-radius: 8px; padding: 20px; margin-bottom: 15px; }\n");
+    fprintf(file, "        .finding-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }\n");
+    fprintf(file, "        .finding-title { font-weight: bold; font-size: 1.1em; color: #000000; }\n");
+    fprintf(file, "        .finding-severity { padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: bold; text-transform: uppercase; border: 1px solid #000000; }\n");
+    fprintf(file, "        .finding-details { color: #333333; font-size: 0.9em; }\n");
+    fprintf(file, "        .finding-file { font-family: monospace; background: #f0f0f0; padding: 2px 6px; border-radius: 4px; border: 1px solid #000000; }\n");
+    fprintf(file, "        .finding-recommendation { background: #f0f0f0; border: 1px solid #000000; border-radius: 4px; padding: 10px; margin-top: 10px; }\n");
+    fprintf(file, "        .compliance-pass { color: #000000; font-weight: bold; }\n");
+    fprintf(file, "        .compliance-fail { color: #000000; font-weight: bold; }\n");
+    fprintf(file, "        .footer { background: #f0f0f0; padding: 20px; text-align: center; color: #333333; border-top: 1px solid #000000; }\n");
+    fprintf(file, "    </style>\n");
+    fprintf(file, "</head>\n");
+    fprintf(file, "<body>\n");
+    fprintf(file, "    <div class=\"container\">\n");
+    fprintf(file, "        <div class=\"header\">\n");
+    fprintf(file, "            <h1>MasterFabric Security Report</h1>\n");
+    fprintf(file, "            <p>Enterprise-Grade Security Analysis & CVE Detection</p>\n");
+    fprintf(file, "            <p>Generated on %s</p>\n", timestamp);
+    fprintf(file, "        </div>\n");
+    fprintf(file, "        <div class=\"content\">\n");
+    
+    // Summary statistics
+    fprintf(file, "            <div class=\"section\">\n");
+    fprintf(file, "                <h2>Security Analysis Summary</h2>\n");
+    fprintf(file, "                <div class=\"stats-grid\">\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%d</div>\n", results->finding_count);
+    fprintf(file, "                        <div class=\"stat-label\">Total Findings</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number severity-critical\">%d</div>\n", results->critical_count);
+    fprintf(file, "                        <div class=\"stat-label\">Critical</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number severity-high\">%d</div>\n", results->high_count);
+    fprintf(file, "                        <div class=\"stat-label\">High</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number severity-medium\">%d</div>\n", results->medium_count);
+    fprintf(file, "                        <div class=\"stat-label\">Medium</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number severity-low\">%d</div>\n", results->low_count);
+    fprintf(file, "                        <div class=\"stat-label\">Low</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%d</div>\n", api_calls_made);
+    fprintf(file, "                        <div class=\"stat-label\">API Calls Made</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                </div>\n");
+    fprintf(file, "            </div>\n");
+    
+    // Policy configuration
+    fprintf(file, "            <div class=\"section\">\n");
+    fprintf(file, "                <h2>Security Policy Configuration</h2>\n");
+    fprintf(file, "                <div class=\"stats-grid\">\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%s</div>\n", severity_to_string(policy->failure_threshold));
+    fprintf(file, "                        <div class=\"stat-label\">Failure Threshold</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%d</div>\n", policy->approved_sdk_count);
+    fprintf(file, "                        <div class=\"stat-label\">Approved SDKs</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%d</div>\n", policy->blacklisted_version_count);
+    fprintf(file, "                        <div class=\"stat-label\">Blacklisted Versions</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%s</div>\n", policy->memory_safety_checks ? "Enabled" : "Disabled");
+    fprintf(file, "                        <div class=\"stat-label\">Memory Safety</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%s</div>\n", policy->concurrency_checks ? "Enabled" : "Disabled");
+    fprintf(file, "                        <div class=\"stat-label\">Concurrency Checks</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                    <div class=\"stat-card\">\n");
+    fprintf(file, "                        <div class=\"stat-number\">%s</div>\n", policy->hardcoded_secret_scan.enabled ? "Enabled" : "Disabled");
+    fprintf(file, "                        <div class=\"stat-label\">Secret Scanning</div>\n");
+    fprintf(file, "                    </div>\n");
+    fprintf(file, "                </div>\n");
+    fprintf(file, "            </div>\n");
+    
+    // Detailed findings
+    if (results->finding_count > 0) {
+        fprintf(file, "            <div class=\"section\">\n");
+        fprintf(file, "                <h2>Detailed Security Findings</h2>\n");
+        
+        // Group findings by severity
+        severity_level_t severities[] = {SEVERITY_CRITICAL, SEVERITY_HIGH, SEVERITY_MEDIUM, SEVERITY_LOW};
+        const char* severity_names[] = {"CRITICAL", "HIGH", "MEDIUM", "LOW"};
+        const char* severity_classes[] = {"severity-critical", "severity-high", "severity-medium", "severity-low"};
+        
+        for (int s = 0; s < 4; s++) {
+            severity_level_t severity = severities[s];
+            int found_any = 0;
+            
+            // Count findings for this severity
+            for (int i = 0; i < results->finding_count; i++) {
+                if (results->findings[i].severity == severity) {
+                    found_any++;
+                }
+            }
+            
+            if (found_any > 0) {
+                fprintf(file, "                <h3 class=\"%s\">%s SEVERITY ISSUES (%d found)</h3>\n", 
+                       severity_classes[s], severity_names[s], found_any);
+                
+                int count = 0;
+                for (int i = 0; i < results->finding_count; i++) {
+                    if (results->findings[i].severity == severity) {
+                        count++;
+                        const security_finding_t* finding = &results->findings[i];
+                        
+                        char escaped_desc[1024];
+                        char escaped_file[512];
+                        char escaped_rec[1024];
+                        
+                        escape_html(finding->description, escaped_desc, sizeof(escaped_desc));
+                        escape_html(finding->file_path, escaped_file, sizeof(escaped_file));
+                        escape_html(finding->recommendation, escaped_rec, sizeof(escaped_rec));
+                        
+                        fprintf(file, "                <div class=\"finding\">\n");
+                        fprintf(file, "                    <div class=\"finding-header\">\n");
+                        fprintf(file, "                        <div class=\"finding-title\">%d. %s</div>\n", count, escaped_desc);
+                        fprintf(file, "                        <div class=\"finding-severity %s\">%s</div>\n", severity_classes[s], severity_names[s]);
+                        fprintf(file, "                    </div>\n");
+                        fprintf(file, "                    <div class=\"finding-details\">\n");
+                        fprintf(file, "                        <strong>File:</strong> <span class=\"finding-file\">%s</span><br>\n", escaped_file);
+                        if (finding->line_number > 0) {
+                            fprintf(file, "                        <strong>Line:</strong> %d<br>\n", finding->line_number);
+                        }
+                        fprintf(file, "                    </div>\n");
+                        fprintf(file, "                    <div class=\"finding-recommendation\">\n");
+                        fprintf(file, "                        <strong>Recommendation:</strong> %s\n", escaped_rec);
+                        fprintf(file, "                    </div>\n");
+                        fprintf(file, "                </div>\n");
+                    }
+                }
+            }
+        }
+        
+        fprintf(file, "            </div>\n");
+    } else {
+        fprintf(file, "            <div class=\"section\">\n");
+        fprintf(file, "                <h2>Security Analysis Results</h2>\n");
+        fprintf(file, "                <div style=\"text-align: center; padding: 40px; color: #000000; font-size: 1.2em; border: 2px solid #000000; background: #f0f0f0;\">\n");
+        fprintf(file, "                    ✓ No Security Issues Found!<br>\n");
+        fprintf(file, "                    🎉 Your code passed all security checks! 🎉\n");
+        fprintf(file, "                </div>\n");
+        fprintf(file, "            </div>\n");
+    }
+    
+    // Policy compliance status
+    fprintf(file, "            <div class=\"section\">\n");
+    fprintf(file, "                <h2>Policy Compliance Status</h2>\n");
+    
+    severity_level_t highest_severity = SEVERITY_LOW;
+    for (int i = 0; i < results->finding_count; i++) {
+        if (results->findings[i].severity > highest_severity) {
+            highest_severity = results->findings[i].severity;
+        }
+    }
+    
+    int compliant = (highest_severity < policy->failure_threshold);
+    
+    if (compliant) {
+        fprintf(file, "                <div class=\"compliance-pass\">✓ Policy Compliance: PASSED</div>\n");
+        fprintf(file, "                <p>🎉 All findings are below the failure threshold (%s) 🎉</p>\n", severity_to_string(policy->failure_threshold));
+    } else {
+        fprintf(file, "                <div class=\"compliance-fail\">✗ Policy Compliance: FAILED</div>\n");
+        fprintf(file, "                <p>⚠️ Findings exceed the failure threshold (%s) ⚠️</p>\n", severity_to_string(policy->failure_threshold));
+    }
+    
+    fprintf(file, "            </div>\n");
+    
+    // Footer
+    fprintf(file, "        </div>\n");
+    fprintf(file, "        <div class=\"footer\">\n");
+    fprintf(file, "            <p>MasterFabric Security Checker - Enterprise-Grade Protection</p>\n");
+    fprintf(file, "            <p>Analysis completed at: %s | Total findings: %d | API calls made: %d</p>\n", 
+            timestamp, results->finding_count, api_calls_made);
+    fprintf(file, "        </div>\n");
+    fprintf(file, "    </div>\n");
+    fprintf(file, "</body>\n");
+    fprintf(file, "</html>\n");
+    
+    fclose(file);
+    return 0;
+}

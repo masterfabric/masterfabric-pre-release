@@ -28,9 +28,11 @@
 typedef struct {
     char target_path[MAX_PATH_LEN];
     char security_yaml_path[MAX_PATH_LEN];
+    char html_output_path[MAX_PATH_LEN];
     int verbose;
     int help;
     int version;
+    int html_export;
 } cli_args_t;
 
 void print_usage(const char* program_name) {
@@ -40,6 +42,8 @@ void print_usage(const char* program_name) {
     printf("Options:\n");
     printf("  --check [PATH]    Check the specified directory for security issues\n");
     printf("                    If PATH is omitted, checks current directory\n");
+    printf("  --html [FILE]     Export results to HTML file\n");
+    printf("                    If FILE is omitted, uses 'security_report.html'\n");
     printf("  --verbose         Enable verbose output\n");
     printf("  --help            Show this help message\n");
     printf("  --version         Show version information\n");
@@ -70,6 +74,15 @@ int parse_arguments(int argc, char* argv[], cli_args_t* args) {
             return 0;
         } else if (strcmp(argv[i], "--verbose") == 0) {
             args->verbose = 1;
+        } else if (strcmp(argv[i], "--html") == 0) {
+            args->html_export = 1;
+            if (i + 1 < argc && argv[i + 1][0] != '-') {
+                strncpy(args->html_output_path, argv[i + 1], MAX_PATH_LEN - 1);
+                i++; // Skip the file argument
+            } else {
+                // No file provided, use default
+                strcpy(args->html_output_path, "security_report.html");
+            }
         } else if (strcmp(argv[i], "--check") == 0) {
             if (i + 1 < argc && argv[i + 1][0] != '-') {
                 strncpy(args->target_path, argv[i + 1], MAX_PATH_LEN - 1);
@@ -237,6 +250,15 @@ int main(int argc, char* argv[]) {
     
     // Generate and display enhanced report
     generate_security_report(&results, &policy, args.verbose, api_calls_made);
+    
+    // Export to HTML if requested
+    if (args.html_export) {
+        if (generate_html_report(&results, &policy, args.html_output_path, api_calls_made) == 0) {
+            printf("\n%s✓ HTML report exported to: %s%s\n", GREEN, args.html_output_path, RESET);
+        } else {
+            fprintf(stderr, "Error: Failed to generate HTML report\n");
+        }
+    }
     
     // Determine exit code based on results and policy
     int exit_code = determine_exit_code(&results, &policy);

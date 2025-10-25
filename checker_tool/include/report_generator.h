@@ -20,6 +20,9 @@ void print_compliance_status(const scan_results_t* results, const security_polic
 void print_footer(const scan_results_t* results, int api_calls_made);
 void generate_security_report(const scan_results_t* results, const security_policy_t* policy, int verbose, int api_calls_made);
 
+// HTML export function
+int generate_html_report(const scan_results_t* results, const security_policy_t* policy, const char* output_file, int api_calls_made);
+
 // Legacy functions (for compatibility)
 void generate_report(const scan_results_t* results, const security_policy_t* policy, int verbose);
 int determine_exit_code(const scan_results_t* results, const security_policy_t* policy);
